@@ -1,9 +1,6 @@
 package com.coolplanet.challenge.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -16,21 +13,20 @@ import com.coolplanet.challenge.repository.RecordedTaskRepository;
 import com.coolplanet.challenge.repository.TaskRepository;
 
 @Service
-public class TaskServiceImpl implements TaskService{
+public class TaskServiceImpl implements TaskService {
 
-	@Autowired
-//	@Qualifier("recordedTaskRepositoryImpl")
+	@Autowired	
 	RecordedTaskRepository recordedTaskRepository;
 	
 	@Autowired
-	@Qualifier("taskRepositoryImpl")
 	TaskRepository taskRepository;
 	
 	@Override
-	public ResponseEntity addTask(RecordedTaskDTO task) {
+	public RecordedTask addRecordedTask(RecordedTaskDTO task) {
 		RecordedTask recordedTask = task.toRecordedTask();
 		RecordedTask addedTask = recordedTaskRepository.save(recordedTask);
-		return new ResponseEntity(addedTask, HttpStatus.OK);
+		calculateAverage(task);
+		return addedTask;
 	}
 
 	@Override
@@ -41,16 +37,26 @@ public class TaskServiceImpl implements TaskService{
 
 	}
 	
+	
+	@Override
+	public Task addTask(TaskDTO taskDto) {
+		Task toAdd = taskDto.toTask();
+		Task addedTask = taskRepository.save(toAdd);
+		return addedTask;
+	}
+	
 	@Override
 	@Async
-	public void calculateAverage(RecordedTaskDTO task) {		
-		Long averageDuration = recordedTaskRepository.averageDurationByTaskIdentifier(task.getTaskIdentifier());
-		
-		Task taskToUpdate = Task.builder().taskIdentifier(task.getTaskIdentifier()).averageTaskDuration(averageDuration).build();
+	public void calculateAverage(RecordedTaskDTO task) {
+
+//		Long averageDuration = recordedTaskRepository.averageDurationByTaskIdentifier(task.getTaskIdentifier());
+//		
+//		Task taskToUpdate = Task.builder().taskIdentifier(task.getTaskIdentifier()).averageTaskDuration(averageDuration).build();
 		
 //		recordedTaskRepository.
 		
 	}
 		
+	
 
 }
