@@ -1,6 +1,6 @@
 package com.coolplanet.challenge.exception;
 
-public class ResourceNotFoundException extends Exception {
+public class ResourceNotFoundException extends TaskServiceException {
 
 	/**
 	 * default Serial ID

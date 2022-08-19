@@ -7,28 +7,35 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.coolplanet.challenge.exception.ErrorResponse;
 import com.coolplanet.challenge.exception.ResourceNotFoundException;
+import com.coolplanet.challenge.exception.TaskServiceException;
+import com.coolplanet.challenge.exception.TasksDataBaseException;
+
+import lombok.extern.slf4j.Slf4j;
 
 
 @RestControllerAdvice
+@Slf4j
 public class ResponseExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+//	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@ExceptionHandler(ResourceNotFoundException.class)
-	public final ResponseEntity<ErrorResponse> handleResourceNotFound(ResourceNotFoundException ex){
+	@ExceptionHandler(TaskServiceException.class)
+	public final ResponseEntity<ErrorResponse> handleResourceNotFound(TaskServiceException ex){
 		ErrorResponse errorResponse = ErrorResponse.builder().message(ex.getMessage()).timeStamp(LocalDateTime.now().toString()).build();
-		logger.error("Resource Not Found Exception :: {}", errorResponse.toString());
+		if(ex instanceof ResourceNotFoundException) {
+			log.error("Resource Not Found Exception :: {}", errorResponse.toString());
+		} else if(ex instanceof TasksDataBaseException) {
+			log.error("Database Exception thrown :: {}", errorResponse.toString());
+		}
 		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);		
 	}
 	
 	@ExceptionHandler(Exception.class)
 	public final ResponseEntity<ErrorResponse> handleInternalError(Exception ex){
 		ErrorResponse errorResponse = ErrorResponse.builder().message(ex.getMessage()).timeStamp(LocalDateTime.now().toString()).build();
-		logger.error("Exception {} caught :: {}", ex.getClass(), errorResponse.toString());
+		log.error("Exception {} caught :: {}", ex.getClass(), errorResponse.toString());
 		return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);		
 	}
 }
