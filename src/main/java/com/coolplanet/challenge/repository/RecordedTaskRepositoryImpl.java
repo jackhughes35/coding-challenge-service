@@ -8,34 +8,35 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.stereotype.Repository;
 
-import com.coolplanet.challenge.entity.Task;
+import com.coolplanet.challenge.entity.RecordedTask;
 
-@Repository("taskRepositoryImpl")
-public class TaskRepositoryImpl implements TaskRepository{
+@Repository("recordedTaskRepositoryImpl")
+public class RecordedTaskRepositoryImpl implements JpaRepository<RecordedTask, Long>{
 
 	@Override
-	public List<Task> findAll() {
+	public List<RecordedTask> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Task> findAll(Sort sort) {
+	public List<RecordedTask> findAll(Sort sort) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Task> findAllById(Iterable<Long> ids) {
+	public List<RecordedTask> findAllById(Iterable<Long> ids) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public <S extends Task> List<S> saveAll(Iterable<S> entities) {
+	public <S extends RecordedTask> List<S> saveAll(Iterable<S> entities) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -47,19 +48,19 @@ public class TaskRepositoryImpl implements TaskRepository{
 	}
 
 	@Override
-	public <S extends Task> S saveAndFlush(S entity) {
+	public <S extends RecordedTask> S saveAndFlush(S entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public <S extends Task> List<S> saveAllAndFlush(Iterable<S> entities) {
+	public <S extends RecordedTask> List<S> saveAllAndFlush(Iterable<S> entities) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void deleteAllInBatch(Iterable<Task> entities) {
+	public void deleteAllInBatch(Iterable<RecordedTask> entities) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -77,43 +78,43 @@ public class TaskRepositoryImpl implements TaskRepository{
 	}
 
 	@Override
-	public Task getOne(Long id) {
+	public RecordedTask getOne(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Task getById(Long id) {
+	public RecordedTask getById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public <S extends Task> List<S> findAll(Example<S> example) {
+	public <S extends RecordedTask> List<S> findAll(Example<S> example) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public <S extends Task> List<S> findAll(Example<S> example, Sort sort) {
+	public <S extends RecordedTask> List<S> findAll(Example<S> example, Sort sort) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Page<Task> findAll(Pageable pageable) {
+	public Page<RecordedTask> findAll(Pageable pageable) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public <S extends Task> S save(S entity) {
+	public <S extends RecordedTask> S save(S entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<Task> findById(Long id) {
+	public Optional<RecordedTask> findById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -137,7 +138,7 @@ public class TaskRepositoryImpl implements TaskRepository{
 	}
 
 	@Override
-	public void delete(Task entity) {
+	public void delete(RecordedTask entity) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -149,7 +150,7 @@ public class TaskRepositoryImpl implements TaskRepository{
 	}
 
 	@Override
-	public void deleteAll(Iterable<? extends Task> entities) {
+	public void deleteAll(Iterable<? extends RecordedTask> entities) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -161,34 +162,35 @@ public class TaskRepositoryImpl implements TaskRepository{
 	}
 
 	@Override
-	public <S extends Task> Optional<S> findOne(Example<S> example) {
+	public <S extends RecordedTask> Optional<S> findOne(Example<S> example) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public <S extends Task> Page<S> findAll(Example<S> example, Pageable pageable) {
+	public <S extends RecordedTask> Page<S> findAll(Example<S> example, Pageable pageable) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public <S extends Task> long count(Example<S> example) {
+	public <S extends RecordedTask> long count(Example<S> example) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public <S extends Task> boolean exists(Example<S> example) {
+	public <S extends RecordedTask> boolean exists(Example<S> example) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public <S extends Task, R> R findBy(Example<S> example, Function<FetchableFluentQuery<S>, R> queryFunction) {
+	public <S extends RecordedTask, R> R findBy(Example<S> example,
+			Function<FetchableFluentQuery<S>, R> queryFunction) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	
+
 }
