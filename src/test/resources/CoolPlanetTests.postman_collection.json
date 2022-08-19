@@ -1,0 +1,42 @@
+{
+	"info": {
+		"_postman_id": "3ef47367-2041-4892-957f-703050fd03f4",
+		"name": "CoolPlanetTests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AddRecordedTask",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"taskDuration\" : 100,\r\n    \"taskIdentifier\": 1\r\n}"
+				},
+				"url": {
+					"raw": "localhost:9086/v1/coolplanet/task",
+					"host": [
+						"localhost"
+					],
+					"port": "9086",
+					"path": [
+						"v1",
+						"coolplanet",
+						"task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Task",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		}
+	]
+}
