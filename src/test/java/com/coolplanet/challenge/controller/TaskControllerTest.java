@@ -13,14 +13,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.coolplanet.challenge.entity.RecordedTask;
 import com.coolplanet.challenge.entity.RecordedTaskDTO;
+import com.coolplanet.challenge.entity.Task;
 import com.coolplanet.challenge.entity.TaskDTO;
 import com.coolplanet.challenge.exception.ErrorResponse;
 import com.coolplanet.challenge.exception.ResourceNotFoundException;
@@ -40,7 +41,8 @@ public class TaskControllerTest {
 	
 	private ObjectMapper mapper = new ObjectMapper();
 	
-	private final String postUri = "/v1/coolplanet/task";
+	private final String postUri = "/v1/coolplanet/recordedTask";
+	private final String postTaskUri = "/v1/coolplanet/task";
 	private final String getUri = "/v1/coolplanet/task";
 	
 	/*
@@ -51,22 +53,53 @@ public class TaskControllerTest {
 	 * @throws Exception
 	 */
 	@Test
-	void addTask_Success() throws Exception {
+	void addRecordedTask_Success() throws Exception {
 		// Initialise Vars
-		ResponseEntity<Object> response = new ResponseEntity<>(HttpStatus.CREATED);
+		Long id = 1L;
+		Long duration = 500L;
+		RecordedTask response = RecordedTask.builder().taskDuration(duration).taskIdentifier(id).build();
 		
 		// Set up Mocks
-		Mockito.when(service.addTask(Mockito.any(RecordedTaskDTO.class))).thenReturn(response);
+		Mockito.when(service.addRecordedTask(Mockito.any(RecordedTaskDTO.class))).thenReturn(response);
 		
 		// Build Request
-		RecordedTaskDTO request = RecordedTaskDTO.builder().taskIdentifier(1L).taskDuration(500L).build();
+		RecordedTaskDTO request = RecordedTaskDTO.builder().taskIdentifier(id).taskDuration(duration).build();
 		RequestBuilder requestBuilder = buildPostRequest(request, postUri);
 		
 		// Carry out request
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
 		// Assertions
-		verify(service).addTask(Mockito.any(RecordedTaskDTO.class));
+		verify(service).addRecordedTask(Mockito.any(RecordedTaskDTO.class));
+		Assertions.assertAll(
+				() -> assertNotNull(result),
+				() -> assertEquals(HttpStatus.CREATED.value(), result.getResponse().getStatus())
+				);
+		
+	}
+	
+	/**
+	 * Success Scenario Testing
+	 * @throws Exception
+	 */
+	@Test
+	void addTask_Success() throws Exception {
+		// Initialise Vars
+		Long id = 1L;
+		Task response = Task.builder().taskId(id).build();
+		
+		// Set up Mocks
+		Mockito.when(service.addTask(Mockito.any(TaskDTO.class))).thenReturn(response);
+		
+		// Build Request
+		TaskDTO request = TaskDTO.builder().taskIdentifier(id).build();
+		RequestBuilder requestBuilder = buildPostRequest(request, postTaskUri);
+		
+		// Carry out request
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		
+		// Assertions
+		verify(service).addTask(Mockito.any(TaskDTO.class));
 		Assertions.assertAll(
 				() -> assertNotNull(result),
 				() -> assertEquals(HttpStatus.CREATED.value(), result.getResponse().getStatus())

@@ -17,7 +17,6 @@ import com.coolplanet.challenge.exception.ResourceNotFoundException;
 @RestControllerAdvice
 public class ResponseExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
 	
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public final ResponseEntity<ErrorResponse> handleResourceNotFound(ResourceNotFoundException ex){
