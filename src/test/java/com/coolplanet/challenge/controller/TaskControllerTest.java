@@ -143,6 +143,38 @@ public class TaskControllerTest {
 				);		
 	}
 	
+	/**
+	 * Failure scenario testing for unexpected Exception which is handled by ExceptionHandler
+	 * @throws Exception
+	 */
+	@Test
+	void getAverageDuration_unexpectedException() throws Exception {
+		// Initialise Vars
+		String errorMessage = "errorMessage";
+		Long id = 1L;
+		NullPointerException exception = new NullPointerException(errorMessage);
+		
+		// set up mocks
+		Mockito.when(service.getAverageTaskDuration(Mockito.anyLong())).thenThrow(exception);
+		
+		// build Request 
+		RequestBuilder request = buildGetRequest(id, getUri);
+		
+		// carry out request
+		MvcResult result = mockMvc.perform(request).andReturn();
+		
+		// Assertions
+		verify(service).getAverageTaskDuration(Mockito.anyLong());
+		
+		ErrorResponse errorResponse = mapper.readValue(result.getResponse().getContentAsString(), ErrorResponse.class);		
+		Assertions.assertAll(
+				() -> assertNotNull(result),				
+				() -> assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), result.getResponse().getStatus()),
+				() -> assertNotNull(errorResponse.getTimeStamp()),
+				() -> assertEquals(errorMessage, errorResponse.getMessage())				
+				);		
+	}
+	
 	/*
 	 * Helper Methods
 	 */
