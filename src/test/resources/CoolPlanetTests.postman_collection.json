@@ -7,15 +7,26 @@
 	"item": [
 		{
 			"name": "AddRecordedTask",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"taskDuration\" : 100,\r\n    \"taskIdentifier\": 1\r\n}"
+					"raw": "{\r\n    \"taskDuration\" : 50,\r\n    \"taskIdentifier\" : 1\r\n}"
 				},
 				"url": {
-					"raw": "localhost:9086/v1/coolplanet/task",
+					"raw": "localhost:9086/v1/coolplanet/recordedTask",
 					"host": [
 						"localhost"
 					],
@@ -23,7 +34,7 @@
 					"path": [
 						"v1",
 						"coolplanet",
-						"task"
+						"recordedTask"
 					]
 				}
 			},
@@ -31,6 +42,24 @@
 		},
 		{
 			"name": "Get Task",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Tasks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
+			"name": "GET average Test",
 			"request": {
 				"method": "GET",
 				"header": [],
