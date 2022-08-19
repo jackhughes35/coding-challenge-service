@@ -43,8 +43,12 @@ public class TaskServiceImpl implements TaskService{
 	
 	@Override
 	@Async
-	public void calculateAverage(RecordedTaskDTO task) {
-		RecordedTask recordedTask = task.toRecordedTask();
+	public void calculateAverage(RecordedTaskDTO task) {		
+		Long averageDuration = recordedTaskRepository.averageDurationByTaskIdentifier(task.getTaskIdentifier());
+		
+		Task taskToUpdate = Task.builder().taskIdentifier(task.getTaskIdentifier()).averageTaskDuration(averageDuration).build();
+		
+//		recordedTaskRepository.
 		
 	}
 		
