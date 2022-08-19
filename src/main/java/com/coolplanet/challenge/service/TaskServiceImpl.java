@@ -1,5 +1,7 @@
 package com.coolplanet.challenge.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,7 @@ import com.coolplanet.challenge.repository.TaskRepository;
 
 @Service
 public class TaskServiceImpl implements TaskService {
-
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired	
 	RecordedTaskRepository recordedTaskRepository;
 	
@@ -34,7 +36,6 @@ public class TaskServiceImpl implements TaskService {
 		Task retrievedTask = taskRepository.findById(taskIdentifier)
 				.orElseThrow(() -> new ResourceNotFoundException("No Task with identifier "+ taskIdentifier));
 		return retrievedTask.toTaskDTO();
-
 	}
 	
 	
@@ -49,12 +50,19 @@ public class TaskServiceImpl implements TaskService {
 	@Async
 	public void calculateAverage(RecordedTaskDTO task) {
 
-//		Long averageDuration = recordedTaskRepository.averageDurationByTaskIdentifier(task.getTaskIdentifier());
-//		
-//		Task taskToUpdate = Task.builder().taskIdentifier(task.getTaskIdentifier()).averageTaskDuration(averageDuration).build();
+		// Calculate the average for a given Task ID
+		Long averageDuration = recordedTaskRepository.averageDurationByTaskIdentifier(task.getTaskIdentifier());
+		logger.info("Average Duration for Task Identifier {} :: {}", task.getTaskIdentifier(), averageDuration);
 		
-//		recordedTaskRepository.
-		
+		// Update the entity
+		Task taskToUpdate = Task.builder().taskId(task.getTaskIdentifier()).averageTaskDuration(averageDuration).build();		
+		Task updatedTask = taskRepository.save(taskToUpdate);
+		if(null != updatedTask) {
+			logger.info("Updated Task ID :: {} with Average Duration :: {}", task.getTaskIdentifier(), averageDuration);
+		} else {
+			logger.info("Rersource Not Found for Task ID :: {} when updating", task.getTaskIdentifier());
+		}
+				
 	}
 		
 	
