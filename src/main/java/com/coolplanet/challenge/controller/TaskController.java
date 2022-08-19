@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.coolplanet.challenge.entity.RecordedTaskDTO;
 import com.coolplanet.challenge.entity.TaskDTO;
+import com.coolplanet.challenge.exception.ResourceNotFoundException;
 import com.coolplanet.challenge.service.TaskService;
 
 @RestController
@@ -27,10 +28,11 @@ public class TaskController {
 	 * Method to get the average duration for a given task
 	 * 
 	 * @return
+	 * @throws ResourceNotFoundException 
 	 */
-	@GetMapping("/task/{taskId}")
-	private ResponseEntity<TaskDTO> getAverageDuration(@PathVariable Long taskId) {
-		TaskDTO task = service.getAverageTaskDuration(taskId);
+	@GetMapping("/task/{taskIdentifier}")
+	private ResponseEntity<TaskDTO> getAverageDuration(@PathVariable Long taskIdentifier) throws ResourceNotFoundException {
+		TaskDTO task = service.getAverageTaskDuration(taskIdentifier);
 		ResponseEntity<TaskDTO> response = new ResponseEntity<>(task, HttpStatus.OK);
 
 		return response;
@@ -49,4 +51,5 @@ public class TaskController {
 		ResponseEntity<Object> response = new ResponseEntity<>(HttpStatus.CREATED);
 		return response;
 	}
+	
 }
