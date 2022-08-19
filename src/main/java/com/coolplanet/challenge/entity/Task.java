@@ -23,6 +23,13 @@ public class Task {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
-	private String taskIdentifier;
+	private Long taskIdentifier;
 	private Long averageTaskDuration;
+	
+	public TaskDTO toTaskDTO() {
+		return TaskDTO.builder()
+				.taskIdentifier(this.taskIdentifier)
+				.averageTaskDuration(this.averageTaskDuration)
+				.build();
+	}
 }
