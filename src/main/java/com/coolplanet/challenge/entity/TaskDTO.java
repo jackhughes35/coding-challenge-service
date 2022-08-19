@@ -16,4 +16,11 @@ public class TaskDTO {
 
 	private Long averageTaskDuration;
 	private Long taskIdentifier;
+	
+	public Task toTask() {
+		return Task.builder()
+				.averageTaskDuration(this.averageTaskDuration)
+				.taskId(this.taskIdentifier)
+				.build();
+	}
 }

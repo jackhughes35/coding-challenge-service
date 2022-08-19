@@ -19,7 +19,7 @@ public class RecordedTaskDTO {
 	public RecordedTask toRecordedTask() {
 		return RecordedTask.builder()
 				.taskDuration(this.taskDuration)
-				.taskIdentifier(this.taskIdentifier)
+				.task(Task.builder().taskId(this.taskIdentifier).build())
 				.build();
 	}
 }
