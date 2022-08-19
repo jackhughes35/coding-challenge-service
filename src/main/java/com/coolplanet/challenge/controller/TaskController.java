@@ -1,7 +1,5 @@
 package com.coolplanet.challenge.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +17,12 @@ import com.coolplanet.challenge.entity.TaskDTO;
 import com.coolplanet.challenge.exception.ResourceNotFoundException;
 import com.coolplanet.challenge.service.TaskService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/v1/coolplanet")
+@Slf4j
 public class TaskController {
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
 	@Autowired
 	TaskService service;
 
@@ -50,7 +49,7 @@ public class TaskController {
 	private ResponseEntity<Object> addRecordedTask(@RequestBody RecordedTaskDTO task) {
 
 		RecordedTask serviceResponse = service.addRecordedTask(task);
-		logger.info("Added Task :: {}", serviceResponse.toString());
+		log.info("Added Task :: {}", serviceResponse.toString());
 		ResponseEntity<Object> response = new ResponseEntity<>(HttpStatus.CREATED);
 		return response;
 	}
@@ -64,7 +63,7 @@ public class TaskController {
 	private ResponseEntity<Object> addTask(@RequestBody TaskDTO task) {
 
 		Task serviceResponse = service.addTask(task);
-		logger.info("Added Task :: {}", serviceResponse.toString());
+		log.info("Added Task :: {}", serviceResponse.toString());
 		ResponseEntity<Object> response = new ResponseEntity<>(HttpStatus.CREATED);
 		return response;
 	}
