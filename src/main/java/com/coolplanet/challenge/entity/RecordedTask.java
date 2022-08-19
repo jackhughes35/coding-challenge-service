@@ -29,8 +29,11 @@ public class RecordedTask {
 	private Long taskRecordIdentifier;	
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "task_identifier")
+	@JoinColumn(name = "task_identifier", insertable = false, updatable = false)
 	private Task task;	
+	
+	@Column(name = "task_identifier")
+	private Long taskIdentifier;
 	
 	@Column(name = "task_duration")
 	private Long taskDuration;
@@ -41,4 +44,5 @@ public class RecordedTask {
 				.taskIdentifier(this.task.getTaskId())
 				.build();
 	}
+	
 }
