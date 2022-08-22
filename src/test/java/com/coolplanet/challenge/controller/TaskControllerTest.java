@@ -2,6 +2,7 @@ package com.coolplanet.challenge.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.Assertions;
@@ -74,6 +75,32 @@ public class TaskControllerTest {
 		Assertions.assertAll(
 				() -> assertNotNull(result),
 				() -> assertEquals(HttpStatus.CREATED.value(), result.getResponse().getStatus())
+				);
+		
+	}
+	
+	/**
+	 * Failure Scenario Testing: Validation
+	 * @throws Exception
+	 */
+	@Test
+	void addRecordedTask_Failure() throws Exception {
+		// Initialise Vars		
+		Long duration = 500L;
+		
+		// Build Request
+		RecordedTaskDTO request = RecordedTaskDTO.builder().taskDuration(duration).build();
+		RequestBuilder requestBuilder = buildPostRequest(request, postUri);
+		
+		// Carry out request
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		
+		// Assertions
+		Mockito.verifyNoInteractions(service);
+		Assertions.assertAll(
+				() -> assertNotNull(result),
+				() -> assertTrue(result.getResponse().getContentAsString().contains("Must provide a parent Task ID")),
+				() -> assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResponse().getStatus())
 				);
 		
 	}

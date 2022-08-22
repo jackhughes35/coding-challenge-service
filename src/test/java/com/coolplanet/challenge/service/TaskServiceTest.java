@@ -28,7 +28,7 @@ import com.coolplanet.challenge.repository.TaskRepository;
 public class TaskServiceTest {
 
 	@Autowired
-	TaskServiceImpl service;
+	TaskService service;
 	
 	@MockBean 
 	RecordedTaskRepository recordedTaskRepo;
@@ -70,6 +70,7 @@ public class TaskServiceTest {
 				() -> assertEquals(input.getTaskIdentifier(), capturedTask.getTaskIdentifier())
 				);
 	}
+	
 	
 	/**
 	 * Success Scenario Get Task

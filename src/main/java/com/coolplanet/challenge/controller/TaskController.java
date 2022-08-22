@@ -1,5 +1,8 @@
 package com.coolplanet.challenge.controller;
 
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +49,7 @@ public class TaskController {
 	 * @return Acknowledgement or failure
 	 */
 	@PostMapping("/recordedTask")
-	private ResponseEntity<Object> addRecordedTask(@RequestBody RecordedTaskDTO task) {
+	private ResponseEntity<Object> addRecordedTask(@Valid @RequestBody RecordedTaskDTO task) {
 
 		RecordedTask serviceResponse = service.addRecordedTask(task);
 		log.info("Added Task :: {}", serviceResponse.toString());

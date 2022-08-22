@@ -1,7 +1,5 @@
 package com.coolplanet.challenge.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -14,9 +12,11 @@ import com.coolplanet.challenge.exception.ResourceNotFoundException;
 import com.coolplanet.challenge.repository.RecordedTaskRepository;
 import com.coolplanet.challenge.repository.TaskRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class TaskServiceImpl implements TaskService {
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired	
 	RecordedTaskRepository recordedTaskRepository;
 	
@@ -25,10 +25,14 @@ public class TaskServiceImpl implements TaskService {
 	
 	@Override
 	public RecordedTask addRecordedTask(RecordedTaskDTO task) {
+		// Insert individual record
 		RecordedTask recordedTask = task.toRecordedTask();
 		RecordedTask addedTask = recordedTaskRepository.save(recordedTask);
+		log.info("Added Recorded Task Type :: {} with Duration of :: {}", recordedTask.getTaskIdentifier(), recordedTask.getTaskDuration());
+		// Async call to update average in table averages table
 		calculateAverage(task);
 		return addedTask;
+
 	}
 
 	@Override
@@ -38,7 +42,9 @@ public class TaskServiceImpl implements TaskService {
 		return retrievedTask.toTaskDTO();
 	}
 	
-	
+	/**
+	 * Security with Role based auth. 
+	 */
 	@Override
 	public Task addTask(TaskDTO taskDto) {
 		Task toAdd = taskDto.toTask();
@@ -52,15 +58,15 @@ public class TaskServiceImpl implements TaskService {
 
 		// Calculate the average for a given Task ID
 		Long averageDuration = recordedTaskRepository.averageDurationByTaskIdentifier(task.getTaskIdentifier());
-		logger.info("Average Duration for Task Identifier {} :: {}", task.getTaskIdentifier(), averageDuration);
+		log.info("Average Duration for Task Identifier {} :: {}", task.getTaskIdentifier(), averageDuration);
 		
 		// Update the entity
 		Task taskToUpdate = Task.builder().taskId(task.getTaskIdentifier()).averageTaskDuration(averageDuration).build();		
 		Task updatedTask = taskRepository.save(taskToUpdate);
 		if(null != updatedTask) {
-			logger.info("Updated Task ID :: {} with Average Duration :: {}", task.getTaskIdentifier(), averageDuration);
+			log.info("Updated Task ID :: {} with Average Duration :: {}", task.getTaskIdentifier(), averageDuration);
 		} else {
-			logger.info("Rersource Not Found for Task ID :: {} when updating", task.getTaskIdentifier());
+			log.info("Resource Not Found for Task ID :: {} when updating", task.getTaskIdentifier());
 		}
 				
 	}

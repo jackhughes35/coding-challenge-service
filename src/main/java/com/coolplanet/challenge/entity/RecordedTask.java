@@ -1,6 +1,5 @@
 package com.coolplanet.challenge.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,11 +11,13 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Builder
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -28,13 +29,13 @@ public class RecordedTask {
 	@Column(name = "task_record_identifier")
 	private Long taskRecordIdentifier;	
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@Column(name = "task_identifier")
+	private long taskIdentifier;
+	
+	@ManyToOne
 	@JoinColumn(name = "task_identifier", insertable = false, updatable = false)
 	private Task task;	
-	
-	@Column(name = "task_identifier")
-	private Long taskIdentifier;
-	
+		
 	@Column(name = "task_duration")
 	private Long taskDuration;
 	

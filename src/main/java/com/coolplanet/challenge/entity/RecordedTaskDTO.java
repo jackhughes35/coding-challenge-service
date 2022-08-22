@@ -1,5 +1,8 @@
 package com.coolplanet.challenge.entity;
 
+
+import javax.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +16,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class RecordedTaskDTO {
 
+	@NotNull(message = "Must provide a task duration")
 	private Long taskDuration;
+	@NotNull(message = "Must provide a parent Task ID")
 	private Long taskIdentifier;
 	
 	public RecordedTask toRecordedTask() {

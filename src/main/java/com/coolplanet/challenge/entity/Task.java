@@ -10,16 +10,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Builder
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -29,6 +32,7 @@ public class Task {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	@Column(name = "task_identifier")
+	@NotNull
 	private Long taskId;
 	
 	@Column(name = "average_task_duration")
@@ -36,7 +40,7 @@ public class Task {
 	
 	@JsonIgnore
 	@OneToMany
-	@JoinColumn(name = "task_identifier")
+	@JoinColumn(name = "task_identifier", updatable = false)
 	private Set<RecordedTask> recordedTasks;
 	
 	public TaskDTO toTaskDTO() {
